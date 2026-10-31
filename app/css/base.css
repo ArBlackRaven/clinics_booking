@@ -1,0 +1,92 @@
+/* ============================================================
+   base.css — variables, reset, phone shell, typography helpers
+   Flat design: no shadows, no gradients anywhere.
+   ============================================================ */
+
+:root {
+  --brand: #0F6E8C;
+  --brand-dark: #09485C;
+  --brand-light: #E6F3F7;
+  --surface: #FAF8F5;
+  --card: #FFFFFF;
+  --border: #E5E7EB;
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+  --success: #166534;
+  --error: #991B1B;
+
+  --radius: 8px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  --phone-max: 420px;
+}
+
+* {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #EDEDED; /* plain light gray around the "phone" */
+  color: var(--text-main);
+  font-family: 'Noto Sans Arabic', system-ui, sans-serif;
+  direction: rtl;
+  text-align: right;
+  overscroll-behavior: none;
+}
+
+/* Phone shell */
+.phone-shell {
+  max-width: var(--phone-max);
+  width: 100%;
+  background: var(--surface);
+  min-height: 100vh;
+  position: relative;
+}
+
+@media (min-width: 480px) {
+  .phone-shell {
+    border-inline: 1px solid var(--border);
+    min-height: 100vh;
+  }
+}
+
+/* Material symbols sizing helper */
+.material-symbols-outlined {
+  font-size: 24px;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Arabic-friendly line height */
+body { line-height: 1.85; }
+
+/* Scrollbar helpers */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.timeline-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.timeline-scroll::-webkit-scrollbar { height: 4px; }
+.timeline-scroll::-webkit-scrollbar-track { background: transparent; }
+.timeline-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 2px; }
+
+/* Focus ring — flat and simple */
+button:focus-visible, input:focus-visible, a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.pb-safe { padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px)); }
+.pt-safe { padding-top: env(safe-area-inset-top, 0px); }
