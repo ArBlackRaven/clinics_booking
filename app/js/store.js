@@ -1,5 +1,5 @@
 /* ============================================================
-   store.js — localStorage state: session, draft booking,
+   store.js — state: session + draft (sessionStorage, per tab),
    bookings list (shared between patient & staff views).
    Exposed as window.Store
    ============================================================ */
@@ -14,14 +14,24 @@ window.Store = (function () {
     seeded: 'clinics.seeded.v1'
   };
 
+  // Session & draft are per-tab (sessionStorage) so you can open the app
+  // twice — patient in one tab, staff in another — and see bookings sync live.
+  // Bookings stay in localStorage (shared across tabs).
   function read(key, fallback) {
     try {
-      var raw = localStorage.getItem(key);
+      var raw = storageFor(key).getItem(key);
       return raw ? JSON.parse(raw) : fallback;
     } catch (e) { return fallback; }
   }
   function write(key, val) {
-    localStorage.setItem(key, JSON.stringify(val));
+    storageFor(key).setItem(key, JSON.stringify(val));
+  }
+  function removeKey(key) {
+    storageFor(key).removeItem(key);
+  }
+  function storageFor(key) {
+    if (key === KEYS.session || key === KEYS.draft) return sessionStorage;
+    return localStorage;
   }
 
   // ---- Seed once so the staff schedule has content on first run ----
@@ -117,7 +127,7 @@ window.Store = (function () {
   // ---- Session ----
   function getSession() { return read(KEYS.session, null); }
   function setSession(s) { write(KEYS.session, s); }
-  function clearSession() { localStorage.removeItem(KEYS.session); }
+  function clearSession() { removeKey(KEYS.session); removeKey(KEYS.draft); }
 
   // ---- Draft (booking in progress) ----
   function getDraft() {
