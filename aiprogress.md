@@ -152,15 +152,55 @@ File: `the desgin/stitch_arabic_clinic_appointment_booker/arabic_clinical_bookin
 
 ---
 
-## 8. Recommended Next Steps (when ready to implement)
 
-- Consolidate the 5 HTML screens into a single app or a proper multi-page structure with \\shared CSS/JS.
-- Align the Tailwind theme with DESIGN.md (pick one color system; currently two variants exist).
-- Add Arabic-specific font (`Noto Sans Arabic`) consistently across all screens.
-- Connect hardcoded data to a backend/API for real doctors, clinics, slots, and booking.
-- Add form validation and booking submission handling.
-- Standardize accessibility attributes across all screens.
+## 8. Implementation Status — Clickable Demo Built in `app/` ✅
+
+A full front-end-only clickable demo now lives in **`app/`** (the `_1.._5` folders remain untouched as design references). Plain HTML + Tailwind CDN + vanilla JS, hash routing, no build tools.
+
+### Screens built (all Arabic RTL, Egyptian context, fees in ج.م, cash payment only)
+
+| Route | File | Notes |
+|---|---|---|
+| `#/login` | `js/screens/login.js` | Phone validation `01[0125]XXXXXXXX`; small link to switch to staff mode |
+| `#/verify/<phone>` | `js/screens/verify.js` | Accepts any 4-digit code |
+| `#/home` | `js/screens/home.js` | Choose clinic (3 clinics) + slim upcoming-booking strip |
+| `#/doctor` | `js/screens/choose-doctor.js` | Round avatars, fallback = light-teal circle w/ first Arabic letter |
+| `#/datetime` | `js/screens/date-time.js` + `js/timeline.js` | Video-editor-style timeline: day selector, big selected date/time text, scrollable ruler (hour marks + half-hour ticks), teal available blocks / gray booked blocks, fixed center playhead, snap on scroll-stop, tap-to-select, mouse drag + wheel, "اكتب المعاد يدوي" manual inputs w/ slot validation, disabled continue until selection |
+| `#/confirm` | `js/screens/confirm.js` | Review + confirm (cash note) |
+| `#/ticket/<id>` | `js/screens/ticket.js` | QR (local `lib/qrcode.js`, no CDN) + manual booking code |
+| `#/bookings` | `js/screens/my-bookings.js` | My bookings list |
+| `#/cancel/<id>` | `js/screens/cancel.js` | Cancel with confirm step |
+| `#/staff` | `js/screens/staff-schedule.js` | Daily schedule, switch between 3 clinics, day selector, statuses قادم/وصل/تم الكشف, empty slots show "فاضي" |
+| `#/checkin` | `js/screens/staff-checkin.js` | Simulated QR scan (camera box + "محاكاة مسح") + manual code entry |
+| `#/staff-book` | `js/screens/staff-manual-booking.js` | Staff books manually using the same timeline, nothing preselected |
+
+**Added beyond the screenshots:** login, verify, ticket/QR, my bookings, cancel flow, entire staff section, reminder toast (fires on app open when a booking is within the next hour; hidden demo button `#demo-reminder-btn`). Removed per corrections: Saudi references, ر.س currency, remote-consultation tab, years-of-experience, all English UI text.
+
+### Architecture (React-ready)
+- One file per screen under `js/screens/`, each exporting `{ render, init }` onto `window.App.screens.<name>` (component-like naming: `button`, `card`, `doctor-card`, `slot-block`, `timeline`, …).
+- `js/router.js` — tiny hash router; `js/utils.js` — shared helpers (Arabic/Egyptian dates, toast, formatting); `js/data.js` — ALL mock data (clinics, doctors, slots, seeds); `js/store.js` — state.
+- CSS split: `css/base.css`, `css/components.css`, `css/screens.css` with CSS variables; Tailwind CDN handles utility styling with inline `tailwind.config` theme (brand `#0F6E8C`, flat, 8px radius, no shadows/gradients).
+- Layout: max-width 420 phone shell centered on `#EDEDED` page background.
+
+### State & sync
+- Bookings live in **localStorage** (`clinics.bookings.v1`) — patient bookings appear in staff schedule and vice versa; cross-tab updates via `storage` event listeners on the timeline screens. Session/draft are **per-tab sessionStorage** (`clinics.session.v1`, `clinics.draft.v1`) so you can run patient in one tab and staff in another simultaneously. Seed data written once on first run (`clinics.seeded.v1`).
+
+### How to run
+```bash
+cd app && python3 -m http.server 8000   # then open http://localhost:8000
+```
+Double-clicking `index.html` also works (Tailwind/fonts need internet; everything else is local). To reset demo data: DevTools → clear localStorage/sessionStorage.
 
 ---
 
-**Status:** Analysis complete. No code changes made yet. `aiprogress.md` created at `/media/raven/HDD/CODING/actual projects/Clinics/aiprogress.md`.
+## 9. Original Recommended Next Steps (mostly done — kept for history)
+
+- ~~Consolidate the 5 HTML screens into a single app~~ → done in `app/`.
+- ~~Align the Tailwind theme with DESIGN.md~~ → done (single brand theme).
+- ~~Add Noto Sans Arabic consistently~~ → done.
+- Backend/API connection still out of scope (mock data only, by design).
+- Accessibility standardization partially addressed (labels/aria on interactive elements).
+
+---
+
+**Status:** Clickable demo implemented and verified (all routes serve 200, syntax-checked). Last update: per-tab session storage (`store: per-tab session/draft (sessionStorage)`).
