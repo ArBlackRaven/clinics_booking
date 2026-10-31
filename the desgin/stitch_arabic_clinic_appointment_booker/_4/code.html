@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#f8f9ff;}body{overscroll-behavior:none;direction:rtl;text-align:right;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-lowest": "#ffffff", "tertiary-fixed": "#a6f4b5", "on-primary-fixed-variant": "#004d64", "secondary-fixed-dim": "#bdc7d8", "inverse-on-surface": "#eaf1ff", "on-primary": "#ffffff", "tertiary-container": "#287340", "on-secondary": "#ffffff", "tertiary": "#025a2a", "on-background": "#121c2a", "surface-tint": "#006684", "surface-dim": "#d0dbed", "secondary-container": "#d6e0f1", "on-primary-container": "#c1eaff", "on-surface-variant": "#3f484d", "inverse-primary": "#85d0f2", "surface-container-low": "#eff4ff", "surface": "#f8f9ff", "primary": "#00556d", "outline-variant": "#bfc8cd", "on-tertiary-fixed-variant": "#005226", "tertiary-fixed-dim": "#8bd79b", "surface-container-high": "#dee9fc", "surface-bright": "#f8f9ff", "primary-fixed-dim": "#85d0f2", "on-secondary-container": "#596372", "on-error-container": "#93000a", "secondary-fixed": "#d9e3f4", "on-tertiary": "#ffffff", "surface-container-highest": "#d9e3f6", "primary-fixed": "#bde9ff", "on-primary-fixed": "#001f2a", "error": "#ba1a1a", "on-surface": "#121c2a", "background": "#f8f9ff", "on-tertiary-container": "#a8f6b6", "on-tertiary-fixed": "#00210b", "error-container": "#ffdad6", "inverse-surface": "#27313f", "outline": "#6f787e", "surface-container": "#e6eeff", "secondary": "#555f6d", "on-secondary-fixed-variant": "#3e4755", "surface-variant": "#d9e3f6", "on-secondary-fixed": "#121c28", "on-error": "#ffffff", "primary-container": "#0f6e8c" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1rem", "margin": "1.25rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem" }, "fontFamily": { "label-lg": ["Noto Sans"], "body-lg": ["Noto Sans"], "label-sm": ["Noto Sans"], "headline-lg": ["Noto Sans"], "label-md": ["Noto Sans"], "headline-sm": ["Noto Sans"], "headline-md": ["Noto Sans"], "body-md": ["Noto Sans"] }, "fontSize": { "label-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "30px", "fontWeight": "400" }], "label-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "headline-lg": ["24px", { "lineHeight": "36px", "fontWeight": "700" }], "label-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "32px", "fontWeight": "700" }], "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="رجوع" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary-container focus:outline-none" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_forward</span></button><h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Schedule Slot Selection</h2></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex flex-col relative w-full px-margin pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-6" dir="rtl">
+<!-- Progress & Stepper Context -->
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-space-xs text-primary-container">
+<span class="material-symbols-outlined text-[18px]">calendar_clock</span>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold">الخطوة ٣ من ٤: تفاصيل الحجز</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">عيادة القلب والأوعية</span>
+</div>
+<!-- Screen Header -->
+<div class="mb-space-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">تحديد التاريخ والوقت</h1>
+<p class="font-body-md text-body-md text-secondary mt-1">يرجى اختيار اليوم والتوقيت المناسب لموعد الفحص الطبي المعتمد.</p>
+</div>
+<!-- Selection Flow Container -->
+<div class="flex flex-col gap-space-lg">
+<!-- Dates Section -->
+<section class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between mb-1">
+<label class="font-label-md text-label-md text-on-surface font-semibold">التاريخ المتاح (مايو ٢٠٢٥)</label>
+<span class="font-label-sm text-label-sm text-secondary">الأيام الأقرب حجزاً</span>
+</div>
+<div aria-label="اختيار اليوم" class="grid grid-cols-3 gap-space-sm" id="days-container" role="radiogroup">
+<!-- Day 1 -->
+<button aria-checked="false" class="date-option flex flex-col items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface transition-colors focus:outline-none" onclick="selectDate(this, 'الأحد ١٨ مايو ٢٠٢٥')" role="radio" type="button">
+<span class="font-label-sm text-label-sm text-secondary">الأحد</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">١٨</span>
+<span class="font-label-sm text-label-sm mt-0.5 text-secondary">مايو</span>
+</button>
+<!-- Day 2 (Default Selected) -->
+<button aria-checked="true" class="date-option flex flex-col items-center justify-center p-3 rounded-lg bg-primary-container text-on-primary font-semibold transition-colors focus:outline-none" onclick="selectDate(this, 'الإثنين ١٩ مايو ٢٠٢٥')" role="radio" type="button">
+<span class="font-label-sm text-label-sm text-on-primary opacity-90">الإثنين</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5 text-on-primary">١٩</span>
+<span class="font-label-sm text-label-sm mt-0.5 text-on-primary opacity-90">مايو</span>
+</button>
+<!-- Day 3 -->
+<button aria-checked="false" class="date-option flex flex-col items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface transition-colors focus:outline-none" onclick="selectDate(this, 'الثلاثاء ٢٠ مايو ٢٠٢٥')" role="radio" type="button">
+<span class="font-label-sm text-label-sm text-secondary">الثلاثاء</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">٢٠</span>
+<span class="font-label-sm text-label-sm mt-0.5 text-secondary">مايو</span>
+</button>
+</div>
+</section>
+<!-- Times Section -->
+<section class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between mb-1">
+<label class="font-label-md text-label-md text-on-surface font-semibold">الأوقات المتوفرة</label>
+<span class="font-label-sm text-label-sm text-secondary">توقيت محلي (٣٠ دقيقة)</span>
+</div>
+<!-- Time Slots Grid -->
+<div aria-label="اختيار الوقت" class="grid grid-cols-2 gap-space-sm" id="times-container" role="radiogroup">
+<!-- 09:30 AM -->
+<button aria-checked="false" class="time-option h-14 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none" onclick="selectTime(this, '٠٩:٣٠ صباحاً')" role="radio" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span>٠٩:٣٠ صباحاً</span>
+</button>
+<!-- 10:00 AM (Default Selected) -->
+<button aria-checked="true" class="time-option h-14 rounded-lg bg-primary-container text-on-primary font-semibold font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none" onclick="selectTime(this, '١٠:٠٠ صباحاً')" role="radio" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-primary">schedule</span>
+<span>١٠:٠٠ صباحاً</span>
+</button>
+<!-- 11:15 AM -->
+<button aria-checked="false" class="time-option h-14 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none" onclick="selectTime(this, '١١:١٥ صباحاً')" role="radio" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span>١١:١٥ صباحاً</span>
+</button>
+<!-- 04:30 PM -->
+<button aria-checked="false" class="time-option h-14 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none" onclick="selectTime(this, '٠٤:٣٠ مساءً')" role="radio" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span>٠٤:٣٠ مساءً</span>
+</button>
+<!-- 05:00 PM -->
+<button aria-checked="false" class="time-option h-14 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none" onclick="selectTime(this, '٠٥:٠٠ مساءً')" role="radio" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span>٠٥:٠٠ مساءً</span>
+</button>
+<!-- 06:15 PM -->
+<button aria-checked="false" class="time-option h-14 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none" onclick="selectTime(this, '٠٦:١٥ مساءً')" role="radio" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span>٠٦:١٥ مساءً</span>
+</button>
+</div>
+</section>
+<!-- Clinic Reassurance Banner -->
+<div class="flex items-center gap-space-sm p-space-md rounded-lg bg-surface-container-low border border-outline-variant">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">verified_user</span>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        يتم تأكيد وتثبيت الحجز فورياً عبر النظام الطبي الوطني دون انتظار.
+      </p>
+</div>
+<!-- Summary Box Single Line -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px] mt-0.5">event_available</span>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-sm text-label-sm text-secondary font-medium">ملخص الموعد المختار:</span>
+<p class="font-label-md text-label-md text-on-surface font-bold" id="summary-line">
+            الموعد المختار: الإثنين ١٩ مايو ٢٠٢٥ - الساعة ١٠:٠٠ صباحاً
+          </p>
+</div>
+</div>
+</div>
+<!-- Action Button Area -->
+<div class="pt-2">
+<button class="w-full h-14 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-space-sm focus:outline-none active:opacity-95 transition-opacity" onclick="proceedToReview()" type="button">
+<span>متابعة لمراجعة الحجز</span>
+<span class="material-symbols-outlined text-[20px] rtl:rotate-180">arrow_forward</span>
+</button>
+<p class="font-label-sm text-label-sm text-secondary text-center mt-3">
+        يمكن تعديل أو إلغاء الموعد بدون رسوم قبل الموعد بـ ٢٤ ساعة
+      </p>
+</div>
+</div>
+</div>
+<script>
+  let selectedDate = "الإثنين ١٩ مايو ٢٠٢٥";
+  let selectedTime = "١٠:٠٠ صباحاً";
+
+  function updateSummary() {
+    const summaryEl = document.getElementById("summary-line");
+    if (summaryEl) {
+      summaryEl.textContent = `الموعد المختار: ${selectedDate} - الساعة ${selectedTime}`;
+    }
+  }
+
+  function selectDate(btn, dateString) {
+    document.querySelectorAll(".date-option").forEach(el => {
+      el.className = "date-option flex flex-col items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface transition-colors focus:outline-none";
+      el.setAttribute("aria-checked", "false");
+      const spans = el.querySelectorAll("span");
+      if (spans.length >= 3) {
+        spans[0].className = "font-label-sm text-label-sm text-secondary";
+        spans[1].className = "font-headline-md text-headline-md font-bold mt-0.5";
+        spans[2].className = "font-label-sm text-label-sm mt-0.5 text-secondary";
+      }
+    });
+
+    btn.className = "date-option flex flex-col items-center justify-center p-3 rounded-lg bg-primary-container text-on-primary font-semibold transition-colors focus:outline-none";
+    btn.setAttribute("aria-checked", "true");
+    const activeSpans = btn.querySelectorAll("span");
+    if (activeSpans.length >= 3) {
+      activeSpans[0].className = "font-label-sm text-label-sm text-on-primary opacity-90";
+      activeSpans[1].className = "font-headline-md text-headline-md font-bold mt-0.5 text-on-primary";
+      activeSpans[2].className = "font-label-sm text-label-sm mt-0.5 text-on-primary opacity-90";
+    }
+
+    selectedDate = dateString;
+    updateSummary();
+  }
+
+  function selectTime(btn, timeString) {
+    document.querySelectorAll(".time-option").forEach(el => {
+      el.className = "time-option h-14 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none";
+      el.setAttribute("aria-checked", "false");
+      const icon = el.querySelector(".material-symbols-outlined");
+      if (icon) icon.className = "material-symbols-outlined text-[18px] text-secondary";
+    });
+
+    btn.className = "time-option h-14 rounded-lg bg-primary-container text-on-primary font-semibold font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors focus:outline-none";
+    btn.setAttribute("aria-checked", "true");
+    const activeIcon = btn.querySelector(".material-symbols-outlined");
+    if (activeIcon) activeIcon.className = "material-symbols-outlined text-[18px] text-on-primary";
+
+    selectedTime = timeString;
+    updateSummary();
+  }
+
+  function proceedToReview() {
+    // Action trigger for institutional booking review
+    console.log("Proceeding with: " + selectedDate + " at " + selectedTime);
+  }
+</script></main></body></html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="mobile_stack" name="shell-type"/>
+<title>تحديد التاريخ والوقت</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: "#0F6E8C",
+            "brand-dark": "#09485C",
+            "brand-light": "#E6F3F7",
+            surface: "#FAF8F5",
+            card: "#FFFFFF",
+            border: "#E5E7EB",
+            "text-main": "#1F2937",
+            "text-muted": "#6B7280",
+            "text-disabled": "#9CA3AF",
+            "slot-disabled": "#E5E7EB"
+          },
+          fontFamily: {
+            sans: ["'Noto Sans Arabic'", "system-ui", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        background-color: #FAF8F5;
+        color: #1F2937;
+        font-family: 'Noto Sans Arabic', system-ui, sans-serif;
+      }
+      body {
+        overscroll-behavior: none;
+        direction: rtl;
+        text-align: right;
+      }
+      .pb-safe { padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px)); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    /* Flat styling - strictly no shadows */
+    * {
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    /* Horizontal timeline scrollbar styling */
+    .timeline-track-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #CBD5E1 transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .timeline-track-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .timeline-track-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .timeline-track-scroll::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 2px;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-surface text-text-main antialiased flex flex-col min-h-screen">
+<!-- 1. Shell Header (Strictly Flat) -->
+<header class="sticky top-0 w-full z-40 bg-[#FAF8F5] border-b border-border pt-safe">
+<div class="h-14 px-4 flex items-center justify-between">
+<button aria-label="رجوع" class="w-10 h-10 flex items-center justify-center text-text-main hover:text-brand focus:outline-none" onclick="history.back()" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_forward</span>
+</button>
+<h2 class="text-base font-bold text-text-main">تحديد التاريخ والوقت</h2>
+<div class="w-10 h-10 flex items-center justify-center text-text-main">
+<span class="material-symbols-outlined text-[22px]">calendar_today</span>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-md mx-auto px-4 pt-4 pb-safe flex flex-col">
+<!-- Stepper / Subtitle Context -->
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold text-brand">الخطوة ٣ من ٤ : تفاصيل الحجز</span>
+<span class="text-xs text-text-muted">عيادة طب الأسرة</span>
+</div>
+<!-- Main page title -->
+<div class="mb-5">
+<h1 class="text-2xl font-bold text-text-main">تحديد التاريخ والوقت</h1>
+<p class="text-sm text-text-muted mt-1 leading-relaxed">يرجى اختيار اليوم والتوقيت المناسب لموعد الفحص الطبي المعتمد.</p>
+</div>
+<!-- 2. Day Selector Row -->
+<div class="mb-5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-semibold text-text-main">الأيام المتاحة (مايو ٢٠٢٥)</span>
+<span class="text-xs text-text-muted">اسحب لعرض المزيد</span>
+</div>
+<div class="flex gap-2.5 overflow-x-auto pb-1 no-scrollbar -mx-4 px-4" id="days-container">
+<!-- Day Card 1 -->
+<button class="day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-text-main min-w-[80px] focus:outline-none transition-colors" onclick="selectDay(this, 'الأحد ١٨ مايو')" type="button">
+<span class="text-xs text-text-muted mb-0.5">الأحد</span>
+<span class="text-lg font-bold">١٨</span>
+<span class="text-xs text-text-muted mt-0.5">مايو</span>
+</button>
+<!-- Day Card 2 (Active by default) -->
+<button class="day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border-2 border-brand bg-brand-light text-brand min-w-[80px] focus:outline-none transition-colors" onclick="selectDay(this, 'الإثنين ١٩ مايو')" type="button">
+<span class="text-xs font-medium mb-0.5">الإثنين</span>
+<span class="text-lg font-bold">١٩</span>
+<span class="text-xs font-medium mt-0.5">مايو</span>
+</button>
+<!-- Day Card 3 -->
+<button class="day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-text-main min-w-[80px] focus:outline-none transition-colors" onclick="selectDay(this, 'الثلاثاء ٢٠ مايو')" type="button">
+<span class="text-xs text-text-muted mb-0.5">الثلاثاء</span>
+<span class="text-lg font-bold">٢٠</span>
+<span class="text-xs text-text-muted mt-0.5">مايو</span>
+</button>
+<!-- Day Card 4 -->
+<button class="day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-text-main min-w-[80px] focus:outline-none transition-colors" onclick="selectDay(this, 'الأربعاء ٢١ مايو')" type="button">
+<span class="text-xs text-text-muted mb-0.5">الأربعاء</span>
+<span class="text-lg font-bold">٢١</span>
+<span class="text-xs text-text-muted mt-0.5">مايو</span>
+</button>
+<!-- Day Card 5 -->
+<button class="day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-text-main min-w-[80px] focus:outline-none transition-colors" onclick="selectDay(this, 'الخميس ٢٢ مايو')" type="button">
+<span class="text-xs text-text-muted mb-0.5">الخميس</span>
+<span class="text-lg font-bold">٢٢</span>
+<span class="text-xs text-text-muted mt-0.5">مايو</span>
+</button>
+</div>
+</div>
+<!-- 3. Selected Time Display Box -->
+<div class="mb-5 p-5 rounded-lg bg-card border border-border text-center">
+<span class="text-sm text-text-muted block mb-1 font-medium">الميعاد المحدد:</span>
+<h2 class="text-[22px] font-bold text-text-disabled transition-colors" id="selected-display">
+        اختار معاد
+      </h2>
+</div>
+<!-- 4. Video-Editor Inspired Horizontal Timeline Section -->
+<div class="mb-5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-semibold text-text-main">المخطط الزمني للمواعيد</span>
+<div class="flex items-center gap-3 text-xs text-text-muted">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-[3px] bg-brand inline-block"></span> متاح</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-[3px] bg-[#E5E7EB] border border-border inline-block"></span> محجوز</span>
+</div>
+</div>
+<!-- Timeline Container -->
+<div class="relative w-full rounded-lg bg-card border border-border overflow-hidden min-h-[170px] select-none" id="timeline-wrapper">
+<!-- Fixed Playhead in Center -->
+<div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-brand z-30 pointer-events-none flex flex-col items-center">
+<!-- Top diamond/marker -->
+<div class="w-3.5 h-3.5 bg-brand rotate-45 -mt-1.5"></div>
+<div class="flex-1"></div>
+<!-- Bottom marker -->
+<div class="w-2.5 h-2.5 bg-brand rotate-45 -mb-1"></div>
+</div>
+<!-- Scrollable Track (Ruler + Slots) -->
+<div class="overflow-x-auto overflow-y-hidden timeline-track-scroll py-3" id="timeline-scroll" style="direction: ltr;">
+<div class="w-[960px] relative px-[180px]">
+<!-- Ruler at the top (LTR timeline from 08:00 to 18:00 for visual continuity) -->
+<div class="relative h-11 border-b border-border mb-3">
+<div class="flex justify-between w-full h-full items-end pb-1 text-[11px] font-medium text-text-muted">
+<!-- 08:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>08:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 09:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>09:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 10:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>10:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 11:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>11:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 12:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>12:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 01:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>01:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 02:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>02:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 03:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>03:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 04:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>04:00</div>
+<div class="flex flex-col items-center"><span class="h-2 w-[1px] bg-[#D1D5DB] mb-1"></span></div>
+<!-- 05:00 -->
+<div class="flex flex-col items-center"><span class="h-3.5 w-[1px] bg-text-disabled mb-1"></span>05:00</div>
+</div>
+</div>
+<!-- Slot Blocks track below ruler -->
+<div class="relative h-12" id="slot-track">
+<!-- 08:30 (محجوز) -->
+<div class="absolute top-1 h-[38px] w-[68px] rounded border border-border bg-[#E5E7EB] text-text-muted flex items-center justify-center text-xs font-semibold select-none cursor-not-allowed" style="left: 30px;">
+                08:30
+              </div>
+<!-- 09:30 (متاح) -->
+<button class="slot-item absolute top-1 h-[38px] px-3 rounded bg-brand text-white flex items-center justify-center gap-1 font-bold text-sm focus:outline-none transition-colors" data-time="٠٩:٣٠ صباحاً" onclick="selectSlot(this, '٠٩:٣٠ صباحاً')" style="left: 95px;" type="button">
+<span class="slot-label">09:30</span>
+</button>
+<!-- 10:00 (متاح) -->
+<button class="slot-item absolute top-1 h-[38px] px-3 rounded bg-brand text-white flex items-center justify-center gap-1 font-bold text-sm focus:outline-none transition-colors" data-time="١٠:٠٠ صباحاً" onclick="selectSlot(this, '١٠:٠٠ صباحاً')" style="left: 170px;" type="button">
+<span class="slot-label">10:00</span>
+</button>
+<!-- 11:15 (متاح) -->
+<button class="slot-item absolute top-1 h-[38px] px-3 rounded bg-brand text-white flex items-center justify-center gap-1 font-bold text-sm focus:outline-none transition-colors" data-time="١١:١٥ صباحاً" onclick="selectSlot(this, '١١:١٥ صباحاً')" style="left: 255px;" type="button">
+<span class="slot-label">11:15</span>
+</button>
+<!-- 12:00 (محجوز) -->
+<div class="absolute top-1 h-[38px] w-[68px] rounded border border-border bg-[#E5E7EB] text-text-muted flex items-center justify-center text-xs font-semibold select-none cursor-not-allowed" style="left: 345px;">
+                12:00
+              </div>
+<!-- 04:30 (متاح) -->
+<button class="slot-item absolute top-1 h-[38px] px-3 rounded bg-brand text-white flex items-center justify-center gap-1 font-bold text-sm focus:outline-none transition-colors" data-time="٠٤:٣٠ مساءً" onclick="selectSlot(this, '٠٤:٣٠ مساءً')" style="left: 450px;" type="button">
+<span class="slot-label">04:30</span>
+</button>
+<!-- 05:00 (متاح) -->
+<button class="slot-item absolute top-1 h-[38px] px-3 rounded bg-brand text-white flex items-center justify-center gap-1 font-bold text-sm focus:outline-none transition-colors" data-time="٠٥:٠٠ مساءً" onclick="selectSlot(this, '٠٥:٠٠ مساءً')" style="left: 525px;" type="button">
+<span class="slot-label">05:00</span>
+</button>
+<!-- 06:15 (متاح) -->
+<button class="slot-item absolute top-1 h-[38px] px-3 rounded bg-brand text-white flex items-center justify-center gap-1 font-bold text-sm focus:outline-none transition-colors" data-time="٠٦:١٥ مساءً" onclick="selectSlot(this, '٠٦:١٥ مساءً')" style="left: 605px;" type="button">
+<span class="slot-label">06:15</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Manual Time Input Button & Expandable Box -->
+<div class="mb-6">
+<button class="text-brand font-medium text-base underline hover:text-brand-dark focus:outline-none py-1 block" id="manual-toggle-btn" onclick="toggleManualPanel()" type="button">
+        اكتب المعاد يدوي
+      </button>
+<div class="hidden mt-3 p-4 rounded-lg bg-card border border-border flex flex-col gap-3.5" id="manual-panel">
+<div>
+<label class="block text-xs font-semibold text-text-main mb-1.5" for="manual-date">تاريخ الكشف</label>
+<input class="w-full h-11 px-3 border border-border rounded-lg bg-card text-sm text-text-main focus:outline-none focus:border-brand" id="manual-date" placeholder="مثال: ٢٠٢٥/٠٥/١٩" type="text" value="٢٠٢٥/٠٥/١٩"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-text-main mb-1.5" for="manual-time">التوقيت</label>
+<input class="w-full h-11 px-3 border border-border rounded-lg bg-card text-sm text-text-main focus:outline-none focus:border-brand" id="manual-time" placeholder="مثال: ١٠:٠٠ صباحاً" type="text" value="١٠:٠٠ صباحاً"/>
+</div>
+<p class="text-[13px] text-text-muted leading-relaxed">
+          ملاحظة: يجب أن يطابق التوقيت موعداً متاحاً في جدول الطبيب الفعلي.
+        </p>
+<button class="w-full h-11 rounded-lg bg-brand text-white font-bold text-sm hover:bg-brand-dark focus:outline-none transition-colors" onclick="confirmManualEntry()" type="button">
+          تأكيد الإدخال اليدوي
+        </button>
+</div>
+</div>
+<!-- 6. Bottom Action Button -->
+<div class="mt-auto pt-2 pb-2">
+<button class="w-full h-14 rounded-lg bg-slot-disabled text-text-disabled font-bold text-lg flex items-center justify-center gap-2 focus:outline-none transition-colors cursor-not-allowed" disabled="" id="proceed-btn" onclick="handleProceed()" type="button">
+<span>تابع</span>
+<span class="material-symbols-outlined text-[20px] rtl:rotate-180">arrow_forward</span>
+</button>
+<p class="text-xs text-text-muted text-center mt-3">
+        يمكن تعديل أو إلغاء الموعد بدون رسوم قبل الموعد بـ ٢٤ ساعة
+      </p>
+</div>
+</main>
+<script>
+    let currentSelectedDay = "الإثنين ١٩ مايو";
+    let currentSelectedTime = null;
+
+    function selectDay(btn, dayText) {
+      currentSelectedDay = dayText;
+      const allDayBtns = document.querySelectorAll(".day-btn");
+      allDayBtns.forEach(b => {
+        b.className = "day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-card text-text-main min-w-[80px] focus:outline-none transition-colors";
+        const spans = b.querySelectorAll("span");
+        if (spans.length >= 3) {
+          spans[0].className = "text-xs text-text-muted mb-0.5";
+          spans[1].className = "text-lg font-bold";
+          spans[2].className = "text-xs text-text-muted mt-0.5";
+        }
+      });
+
+      btn.className = "day-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-lg border-2 border-brand bg-brand-light text-brand min-w-[80px] focus:outline-none transition-colors";
+      const activeSpans = btn.querySelectorAll("span");
+      if (activeSpans.length >= 3) {
+        activeSpans[0].className = "text-xs font-medium mb-0.5";
+        activeSpans[1].className = "text-lg font-bold";
+        activeSpans[2].className = "text-xs font-medium mt-0.5";
+      }
+
+      if (currentSelectedTime) {
+        updateSelectedDisplay();
+      }
+    }
+
+    function selectSlot(btn, timeText) {
+      currentSelectedTime = timeText;
+
+      // Reset all slots
+      document.querySelectorAll(".slot-item").forEach(b => {
+        b.classList.remove("bg-brand-dark");
+        b.classList.add("bg-brand");
+        const check = b.querySelector(".check-icon");
+        if (check) check.remove();
+      });
+
+      // Highlight active slot
+      btn.classList.remove("bg-brand");
+      btn.classList.add("bg-brand-dark");
+
+      // Add small checkmark
+      if (!btn.querySelector(".check-icon")) {
+        const check = document.createElement("span");
+        check.className = "check-icon text-xs font-bold leading-none text-white mr-1";
+        check.innerText = "✓";
+        btn.prepend(check);
+      }
+
+      // Smooth scroll timeline to center the selected slot near the playhead
+      const timelineScroll = document.getElementById("timeline-scroll");
+      if (timelineScroll) {
+        const btnOffset = btn.offsetLeft;
+        const btnWidth = btn.offsetWidth;
+        const containerWidth = timelineScroll.clientWidth;
+        const targetScroll = btnOffset + (btnWidth / 2) - (containerWidth / 2);
+        timelineScroll.scrollTo({ left: targetScroll, behavior: 'smooth' });
+      }
+
+      updateSelectedDisplay();
+      enableProceedBtn();
+    }
+
+    function updateSelectedDisplay() {
+      const display = document.getElementById("selected-display");
+      if (display && currentSelectedTime) {
+        display.textContent = `${currentSelectedDay} - ${currentSelectedTime}`;
+        display.classList.remove("text-text-disabled");
+        display.classList.add("text-text-main");
+      }
+    }
+
+    function enableProceedBtn() {
+      const proceedBtn = document.getElementById("proceed-btn");
+      if (proceedBtn) {
+        proceedBtn.disabled = false;
+        proceedBtn.className = "w-full h-14 rounded-lg bg-brand text-white font-bold text-lg flex items-center justify-center gap-2 focus:outline-none transition-colors cursor-pointer hover:bg-brand-dark";
+      }
+    }
+
+    function toggleManualPanel() {
+      const panel = document.getElementById("manual-panel");
+      if (panel) {
+        panel.classList.toggle("hidden");
+      }
+    }
+
+    function confirmManualEntry() {
+      const dateVal = document.getElementById("manual-date").value.trim();
+      const timeVal = document.getElementById("manual-time").value.trim();
+      if (dateVal && timeVal) {
+        currentSelectedDay = dateVal;
+        currentSelectedTime = timeVal;
+        updateSelectedDisplay();
+        enableProceedBtn();
+
+        // Clear timeline slot highlights
+        document.querySelectorAll(".slot-item").forEach(b => {
+          b.classList.remove("bg-brand-dark");
+          b.classList.add("bg-brand");
+          const check = b.querySelector(".check-icon");
+          if (check) check.remove();
+        });
+
+        toggleManualPanel();
+      }
+    }
+
+    function handleProceed() {
+      if (!currentSelectedTime) return;
+      alert(`تم اختيار الموعد بنجاح: ${currentSelectedDay} في تمام ${currentSelectedTime}`);
+    }
+
+    // Initialize with timeline centered on the first available slot after load
+    window.addEventListener("DOMContentLoaded", () => {
+      const defaultSlot = document.querySelector(".slot-item[data-time='١٠:٠٠ صباحاً']");
+      const timelineScroll = document.getElementById("timeline-scroll");
+      if (defaultSlot && timelineScroll) {
+        setTimeout(() => {
+          const target = defaultSlot.offsetLeft + (defaultSlot.offsetWidth / 2) - (timelineScroll.clientWidth / 2);
+          timelineScroll.scrollTo({ left: target, behavior: 'instant' });
+        }, 100);
+      }
+    });
+  </script>
+</body></html>
