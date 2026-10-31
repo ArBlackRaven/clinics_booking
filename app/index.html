@@ -52,6 +52,12 @@
   <!-- Hidden demo button to trigger the appointment reminder toast -->
   <button id="demo-reminder-btn" title="Demo: trigger reminder toast" aria-label="تنبيه تجريبي">ت</button>
 
+  <!-- App namespace: MUST be defined before any screen file loads.
+       Screens do `App.screens.<name> = ...` at top level; the router
+       lives at the bottom of the page on purpose, so we declare this
+       tiny inline bootstrap here to guarantee ordering. -->
+  <script>window.App = window.App || { screens: {} };</script>
+
   <!-- Data & libraries (plain scripts, no modules) -->
   <script src="lib/qrcode.js"></script>
   <script src="js/data.js"></script>
