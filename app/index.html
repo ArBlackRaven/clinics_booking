@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>مواعدي — حجز العيادات</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..0&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN) + theme -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: "#0F6E8C",
+            "brand-dark": "#09485C",
+            "brand-light": "#E6F3F7",
+            surface: "#FAF8F5",
+            card: "#FFFFFF",
+            line: "#E5E7EB",
+            "text-main": "#1F2937",
+            "text-muted": "#6B7280",
+            ok: "#166534",
+            bad: "#991B1B",
+          },
+          fontFamily: {
+            sans: ["'Noto Sans Arabic'", "system-ui", "sans-serif"],
+          },
+          borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem" },
+        },
+      },
+    };
+  </script>
+
+  <!-- Project styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/screens.css" />
+</head>
+<body class="bg-[#EDEDED] font-sans text-text-main antialiased">
+  <!-- Phone shell: max width 420px, centered on desktop -->
+  <div id="app" class="phone-shell mx-auto bg-surface min-h-screen flex flex-col"></div>
+
+  <!-- Toast container (reminders / messages) -->
+  <div id="toast-root"></div>
+
+  <!-- Hidden demo button to trigger the appointment reminder toast -->
+  <button id="demo-reminder-btn" title="Demo: trigger reminder toast" aria-label="تنبيه تجريبي">ت</button>
+
+  <!-- Data & libraries (plain scripts, no modules) -->
+  <script src="lib/qrcode.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/timeline.js"></script>
+
+  <!-- Screens: each exports App.screens.<name> = { render, init } -->
+  <script src="js/screens/login.js"></script>
+  <script src="js/screens/verify.js"></script>
+  <script src="js/screens/home.js"></script>
+  <script src="js/screens/choose-doctor.js"></script>
+  <script src="js/screens/date-time.js"></script>
+  <script src="js/screens/confirm.js"></script>
+  <script src="js/screens/ticket.js"></script>
+  <script src="js/screens/my-bookings.js"></script>
+  <script src="js/screens/cancel.js"></script>
+  <script src="js/screens/staff-schedule.js"></script>
+  <script src="js/screens/staff-checkin.js"></script>
+  <script src="js/screens/staff-manual-booking.js"></script>
+
+  <!-- Router & boot -->
+  <script src="js/router.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

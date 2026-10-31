@@ -1,0 +1,299 @@
+/* ============================================================
+   screens.css — layout pieces specific to single screens
+   (timeline, day selector, ticket, check-in camera, codes…)
+   ============================================================ */
+
+/* ---------- Timeline (video-editor style) ---------- */
+.timeline { position: relative; }
+
+.timeline__viewport {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-x;
+}
+.timeline__viewport--dragging { cursor: grabbing; }
+
+.timeline__ruler {
+  position: relative;
+  height: 84px; /* ticks row + slot blocks row */
+}
+
+.timeline__tick {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  background: #C6CFD4;
+}
+.timeline__tick--hour { height: 22px; background: #9AA7AE; }
+.timeline__tick--half { height: 12px; }
+
+.timeline__hourlabel {
+  position: absolute;
+  top: 24px;
+  transform: translateX(-50%);
+  font-size: 11.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.slot-block {
+  position: absolute;
+  top: 50px;
+  height: 30px;
+  border-radius: 6px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: outline-color .1s ease;
+}
+.slot-block--available { background: var(--brand); }
+.slot-block--booked   { background: #DDE2E5; cursor: default; }
+.slot-block--selected { outline: 3px solid var(--brand-dark); outline-offset: 1px; }
+.slot-block--available:hover { background: var(--brand-dark); }
+
+.timeline__playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--brand);
+  z-index: 5;
+  pointer-events: none;
+}
+.timeline__playhead::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--brand);
+}
+
+.timeline__now {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #B45309;
+  opacity: .5;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Big selected readout above the timeline */
+.timeline__readout-date { font-size: 22px; font-weight: 700; line-height: 1.5; }
+.timeline__readout-time { font-size: 34px; font-weight: 700; color: var(--brand); line-height: 1.3; }
+.timeline__readout-empty { font-size: 18px; color: var(--text-muted); font-weight: 500; }
+
+/* ---------- Day selector ---------- */
+.day-btn {
+  flex-shrink: 0;
+  min-width: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-main);
+  font-family: inherit;
+  cursor: pointer;
+}
+.day-btn__dow { font-size: 12px; color: var(--text-muted); }
+.day-btn__num { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.day-btn__mon { font-size: 12px; color: var(--text-muted); }
+.day-btn--on {
+  border: 2px solid var(--brand);
+  background: var(--brand-light);
+  color: var(--brand-dark);
+}
+.day-btn--on .day-btn__dow, .day-btn--on .day-btn__mon { color: var(--brand); }
+
+/* ---------- Home upcoming strip ---------- */
+.upcoming-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  background: var(--brand-light);
+  border: 1px solid #C9E4EC;
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+  font-family: inherit;
+}
+
+/* ---------- Ticket ---------- */
+.ticket {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  overflow: hidden;
+}
+.ticket__head {
+  background: var(--brand);
+  color: #fff;
+  padding: var(--space-4);
+  text-align: center;
+}
+.ticket__body { padding: var(--space-4); }
+.ticket__qr {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-3);
+}
+.ticket__qr img, .ticket__qr canvas { display: block; }
+/* perforation look — flat dashed divider */
+.ticket__perf { border: none; border-top: 2px dashed var(--border); margin: 0; }
+.ticket__code {
+  letter-spacing: 4px;
+  font-weight: 700;
+  font-size: 22px;
+  text-align: center;
+  color: var(--brand-dark);
+  direction: ltr;
+}
+
+/* ---------- Booking code chips list rows ---------- */
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.stack { display: flex; flex-direction: column; gap: var(--space-3); }
+
+/* ---------- Staff schedule ---------- */
+.seg-tabs {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  overflow: hidden;
+}
+.seg-tab {
+  flex: 1;
+  padding: 10px 6px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-inline-start: 1px solid var(--border);
+}
+.seg-tab:first-child { border-inline-start: none; }
+.seg-tab--on { background: var(--brand); color: #fff; }
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.schedule-row--empty {
+  background: transparent;
+  border-style: dashed;
+  color: var(--text-muted);
+}
+.schedule-row__time {
+  direction: ltr;
+  font-weight: 700;
+  font-size: 14px;
+  min-width: 74px;
+  text-align: center;
+  color: var(--text-main);
+}
+
+/* status stepper buttons */
+.status-btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.status-btn--qادم {}
+.status-btn--arrived { background: #FCF0DC; color: #92610E; border-color: #EBD9B8; }
+.status-btn--done { background: #DCF2E4; color: var(--success); border-color: #BBE3CA; }
+
+/* ---------- Check-in camera box ---------- */
+.camera-box {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 300px;
+  margin: 0 auto;
+  background: #1B242B;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.camera-box__frame {
+  width: 62%;
+  height: 62%;
+  border: 2px solid #6EE7F9;
+  border-radius: 12px;
+  position: relative;
+}
+.camera-box__scanline {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  height: 2px;
+  background: #6EE7F9;
+  animation: scanline 2.2s ease-in-out infinite alternate;
+}
+@keyframes scanline {
+  from { top: 6%; }
+  to   { top: 92%; }
+}
+
+/* ---------- Verification code boxes ---------- */
+.code-inputs { display: flex; gap: var(--space-3); justify-content: center; direction: ltr; }
+.code-box {
+  width: 56px;
+  height: 60px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text-main);
+  font-family: inherit;
+}
+.code-box:focus { outline: none; border-color: var(--brand); }
+
+/* ---------- Hidden demo button ---------- */
+#demo-reminder-btn {
+  position: fixed;
+  bottom: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 11px;
+  cursor: pointer;
+  opacity: .25;
+  z-index: 200;
+}
+#demo-reminder-btn:hover { opacity: 1; }
